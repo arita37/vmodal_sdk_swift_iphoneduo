@@ -17,8 +17,8 @@
   <img alt="MIT license" src="https://img.shields.io/badge/license-MIT-34C759">
 </p>
 
-VModalSDK 1.2.2 gives Apple apps an async, strongly typed API for the full
-VModal video lifecycle. It uses Swift structured concurrency, supports safe
+VModal SDK 1.2.2 gives Apple apps an async, strongly typed API for the full
+video search lifecycle. It uses Swift structured concurrency, supports safe
 credential rotation, streams upload progress, and keeps collection/stream
 scope immutable so related operations cannot drift apart.
 
