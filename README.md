@@ -2,7 +2,7 @@
   <img src="docs/assets/vmodal-swift-iphone-duo.png" alt="VModal video search and editing SDK" width="100%">
 </p>
 
-<h1 align="center">VModalSDK for Apple platforms</h1>
+<h1 align="center">V Modal SDK for Apple platforms</h1>
 
 <p align="center">
   Search, upload, and index video with one concurrency-safe Swift package.<br>
