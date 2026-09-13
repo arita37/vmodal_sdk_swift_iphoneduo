@@ -1,0 +1,41 @@
+name: publish_vmodal_swift_docs
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+
+permissions:
+  contents: read
+
+env:
+  SDK_VERSION: 1.2.2
+
+jobs:
+  verify_tagged_source:
+    runs-on: macos-26
+    timeout-minutes: 45
+    steps:
+      - name: Checkout exact public tag
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+        with:
+          ref: ${{ github.ref }}
+          persist-credentials: false
+      - name: Verify source provenance and package
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "${{ github.sha }}"
+          test "v$SDK_VERSION" = "$GITHUB_REF_NAME"
+          shasum -a 256 -c SOURCE_MANIFEST.sha256
+          grep -Eq '^Source-vmx-api: [0-9a-f]{40}$' RELEASE_METADATA
+          bash install.sh check
+          bash cli.sh release_check
+          bash build.sh analyze
+          bash test.sh test
+          bash build.sh docs
+      - name: Archive tested DocC output
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: vmodal-swift-docc-${{ github.sha }}
+          path: docs/generated/DerivedData/Build/Products/Debug-iphonesimulator/VModalSDK.doccarchive
+          if-no-files-found: error

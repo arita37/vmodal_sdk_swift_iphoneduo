@@ -1,0 +1,12 @@
+title = "VModal Swift SDK"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Non-secret deterministic fixtures"
+paths = [
+  '''Tests/VModalSDKTests/Fixtures/''',
+  '''Sources/VModalSDK/Routes\.generated\.swift''',
+  '''\.build/'''
+]
