@@ -33,6 +33,10 @@ sdk_example_ios() { local help='
     ## Usage:
       bash build.sh example_ios
   '; xcodebuild build -project Examples/StarterIOS/StarterIOS.xcodeproj -scheme StarterIOS -destination 'generic/platform=iOS Simulator' -derivedDataPath Examples/StarterIOS/DerivedData CODE_SIGNING_ALLOWED=NO; }
+sdk_framebase_ios() { local help='
+    ## Usage:
+      bash build.sh framebase_ios
+  '; xcodebuild build -project Examples/05_framebase/Framebase.xcodeproj -scheme Framebase -destination 'generic/platform=iOS Simulator' -derivedDataPath Examples/05_framebase/DerivedData CODE_SIGNING_ALLOWED=NO; }
 # FUTURE_IPHONE_DUO_XCODE_27_1: restore when Xcode 27.1 is available in CI.
 # sdk_duo_example() { local device; device="$(xcrun simctl list devices available | awk '/iPhone Duo/ {gsub(/[()]/,""); print $(NF-1); exit}')"; [[ -n "$device" ]] || return 1; xcodebuild build -project Examples/StarterIOS/StarterIOS.xcodeproj -scheme StarterIOS -destination "platform=iOS Simulator,id=$device" -derivedDataPath Examples/StarterIOS/DerivedData CODE_SIGNING_ALLOWED=NO; }
 sdk_package() { local help='
@@ -42,13 +46,13 @@ sdk_package() { local help='
 sdk_build() { local help='
     ## Usage:
       bash build.sh build
-  '; sdk_resolve; sdk_format; sdk_analyze; sdk_test; sdk_docs; sdk_package; sdk_example_ios; }
+  '; sdk_resolve; sdk_format; sdk_analyze; sdk_test; sdk_docs; sdk_package; sdk_example_ios; sdk_framebase_ios; }
 sdk_clean() { local help='
     ## Usage:
       bash build.sh clean
-  '; [[ -f Package.swift && "$(pwd)" == *'/sdk_swift_apple' ]] || { echo 'Refusing cleanup outside VModalSDK package.' >&2; return 1; }; grep -q 'name: "VModalSDK"' Package.swift || { echo 'VModalSDK product guard failed.' >&2; return 1; }; rm -rf -- "$sdk_dir/.build" "$sdk_dir/docs/generated" "$sdk_dir/Examples/StarterIOS/DerivedData"; }
+  '; [[ -f Package.swift && "$(pwd)" == *'/sdk_swift_apple' ]] || { echo 'Refusing cleanup outside VModalSDK package.' >&2; return 1; }; grep -q 'name: "VModalSDK"' Package.swift || { echo 'VModalSDK product guard failed.' >&2; return 1; }; rm -rf -- "$sdk_dir/.build" "$sdk_dir/docs/generated" "$sdk_dir/Examples/StarterIOS/DerivedData" "$sdk_dir/Examples/05_framebase/DerivedData"; }
 sdk_dispatch() { local help='
     ## Usage:
       bash build.sh build
-  '; case "${1:-help}" in resolve) sdk_resolve;; format) sdk_format;; analyze) sdk_analyze;; test) sdk_test;; docs) sdk_docs;; example_ios) sdk_example_ios;; package) sdk_package;; build) sdk_build;; clean) sdk_clean;; help|-h|--help) echo "$help";; *) echo "Unknown command: $1" >&2; echo "$help" >&2; return 2;; esac; }
+  '; case "${1:-help}" in resolve) sdk_resolve;; format) sdk_format;; analyze) sdk_analyze;; test) sdk_test;; docs) sdk_docs;; example_ios) sdk_example_ios;; framebase_ios) sdk_framebase_ios;; package) sdk_package;; build) sdk_build;; clean) sdk_clean;; help|-h|--help) echo "$help";; *) echo "Unknown command: $1" >&2; echo "$help" >&2; return 2;; esac; }
 sdk_dispatch "$@"

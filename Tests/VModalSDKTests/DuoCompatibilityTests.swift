@@ -25,6 +25,29 @@ final class XcodeCompatibilityTests: XCTestCase {
         XCTAssertTrue(view.contains("frame(maxWidth:"))
         XCTAssertFalse(view.contains("UIScreen.main.bounds"))
     }
+
+    func testFramebaseUsesTheSameAppleCompatibilityContract() throws {
+        let rootPath = "Examples/05_framebase/"
+        let project = try String(contentsOf: root.appendingPathComponent(rootPath + "Framebase.xcodeproj/project.pbxproj"))
+        let app = try String(contentsOf: root.appendingPathComponent(rootPath + "Framebase/FramebaseApp.swift"))
+        let library = try String(contentsOf: root.appendingPathComponent(rootPath + "Framebase/LibraryView.swift"))
+        XCTAssertTrue(project.contains("IPHONEOS_DEPLOYMENT_TARGET = 16.0"))
+        XCTAssertTrue(project.contains("SWIFT_STRICT_CONCURRENCY = complete"))
+        XCTAssertTrue(project.contains("SWIFT_VERSION = 6.0"))
+        XCTAssertTrue(project.contains("TARGETED_DEVICE_FAMILY = \"1,2\""))
+        XCTAssertTrue(app.contains("@StateObject private var session"))
+        XCTAssertTrue(library.contains("frame(maxWidth: .infinity)"))
+        XCTAssertFalse(library.contains("UIScreen.main.bounds"))
+        for resource in [
+            "Framebase/Resources/Videos/neighborhood_crossing.mp4",
+            "Framebase/Resources/Videos/downtown_traffic.mp4",
+            "Framebase/Resources/Videos/evening_junction.mp4",
+            "Framebase/Resources/Fonts/InstrumentSans.ttf",
+            "Framebase/Resources/Fonts/OFL.txt",
+        ] {
+            XCTAssertTrue(FileManager.default.fileExists(atPath: root.appendingPathComponent(rootPath + resource).path), resource)
+        }
+    }
 }
 
 /* FUTURE_IPHONE_DUO_XCODE_27_1

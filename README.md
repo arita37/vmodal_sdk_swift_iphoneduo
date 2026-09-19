@@ -13,11 +13,11 @@
   <img alt="Swift 6" src="https://img.shields.io/badge/Swift-6.0-F05138?logo=swift&logoColor=white">
   <img alt="iOS 16 or newer" src="https://img.shields.io/badge/iOS-16%2B-111111?logo=apple">
   <img alt="macOS 13 or newer" src="https://img.shields.io/badge/macOS-13%2B-111111?logo=apple">
-  <img alt="Version 1.2.3" src="https://img.shields.io/badge/release-1.2.3-0A84FF">
+  <img alt="Version 1.2.4" src="https://img.shields.io/badge/release-1.2.4-0A84FF">
   <img alt="MIT license" src="https://img.shields.io/badge/license-MIT-34C759">
 </p>
 
-VModalSDK 1.2.3 gives Apple apps a polished, strongly typed path from camera
+VModalSDK 1.2.4 gives Apple apps a polished, strongly typed path from camera
 roll to searchable moments. Build fluid SwiftUI experiences with `async/await`,
 live upload progress, cancellation, key rotation, and immutable collection
 scopes that keep every request aimed at the right video stream.
@@ -198,6 +198,7 @@ upload-continuity claims after the exact iPhone Duo simulator gate is restored.
 - [Public Swift package repository](https://github.com/v-modal/vmodal_sdk_swift_iphoneduo)
 - [`Sources/VModalSDK`](Sources/VModalSDK) — client, resources, models, uploads, and transport
 - [`Examples/StarterIOS`](Examples/StarterIOS) — adaptive SwiftUI starter application
+- [`Examples/05_framebase`](Examples/05_framebase) — native street-video import, indexing, search, and playback application
 - [`Tools`](Tools) — route sync, release manifest, simulations, and live checks
 
 ## Verify locally
@@ -209,6 +210,8 @@ bash build.sh analyze
 bash test.sh test
 bash test.sh sim
 bash test.sh ios
+bash build.sh framebase_ios
+bash test.sh framebase_ios
 bash security_check.sh all
 ```
 

@@ -20,10 +20,14 @@ sdk_example() { local help='
     ## Usage:
       bash run.sh example --device DEVICE_UDID
   '; local device app; device="$(sdk_device_arg "$@")"; xcrun simctl bootstatus "$device" -b; bash build.sh example_ios; app="$(find Examples/StarterIOS/DerivedData -name StarterIOS.app -type d -print -quit)"; [[ -n "$app" ]] || { echo 'StarterIOS.app was not built.' >&2; return 1; }; xcrun simctl install "$device" "$app"; xcrun simctl launch "$device" com.vmodal.StarterIOS; }
+sdk_framebase() { local help='
+    ## Usage:
+      bash run.sh framebase --device DEVICE_UDID
+  '; local device app; device="$(sdk_device_arg "$@")"; xcrun simctl bootstatus "$device" -b; bash build.sh framebase_ios; app="$(find Examples/05_framebase/DerivedData -name Framebase.app -type d -print -quit)"; [[ -n "$app" ]] || { echo 'Framebase.app was not built.' >&2; return 1; }; xcrun simctl install "$device" "$app"; xcrun simctl launch "$device" com.vmodal.Framebase; }
 # FUTURE_IPHONE_DUO_XCODE_27_1: restore automatic Duo simulator selection later.
 # sdk_duo() { local devices count; devices="$(xcrun simctl list devices available | awk '/iPhone Duo/ {gsub(/[()]/,""); print $(NF-1)}')"; count="$(printf '%s\n' "$devices" | awk 'NF {n++} END {print n+0}')"; [[ "$count" == 1 ]] || return 1; sdk_example --device "$devices"; }
 sdk_dispatch() { local help='
     ## Usage:
       bash run.sh sim
-  '; local command="${1:-help}"; shift || true; case "$command" in sim) sdk_sim "$@";; example) sdk_example "$@";; help|-h|--help) echo "$help";; *) echo "Unknown command: $command" >&2; echo "$help" >&2; return 2;; esac; }
+  '; local command="${1:-help}"; shift || true; case "$command" in sim) sdk_sim "$@";; example) sdk_example "$@";; framebase) sdk_framebase "$@";; help|-h|--help) echo "$help";; *) echo "Unknown command: $command" >&2; echo "$help" >&2; return 2;; esac; }
 sdk_dispatch "$@"

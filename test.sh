@@ -23,7 +23,11 @@ sdk_sim() { local help='
 sdk_ios() { local help='
     ## Usage:
       bash test.sh ios
-  '; local device; device="$(bash install.sh device_id)"; bash build.sh example_ios; xcodebuild test -project Examples/StarterIOS/StarterIOS.xcodeproj -scheme StarterIOS -configuration Debug -destination "platform=iOS Simulator,id=$device" CODE_SIGNING_ALLOWED=NO; xcodebuild test -scheme VModalSDK-Package -destination "platform=iOS Simulator,id=$device"; }
+  '; local device; device="$(bash install.sh device_id)"; bash build.sh example_ios; xcodebuild test -project Examples/StarterIOS/StarterIOS.xcodeproj -scheme StarterIOS -configuration Debug -destination "platform=iOS Simulator,id=$device" CODE_SIGNING_ALLOWED=NO; sdk_framebase_ios "$device"; xcodebuild test -scheme VModalSDK-Package -destination "platform=iOS Simulator,id=$device"; }
+sdk_framebase_ios() { local help='
+    ## Usage:
+      bash test.sh framebase_ios [DEVICE_UDID]
+  '; local device="${1:-}"; [[ -n "$device" ]] || device="$(bash install.sh device_id)"; bash build.sh framebase_ios; xcodebuild test -project Examples/05_framebase/Framebase.xcodeproj -scheme Framebase -configuration Debug -destination "platform=iOS Simulator,id=$device" -derivedDataPath Examples/05_framebase/DerivedData CODE_SIGNING_ALLOWED=NO; }
 # FUTURE_IPHONE_DUO_XCODE_27_1: restore the exact Duo acceptance commands later.
 # sdk_duo() { bash build.sh duo_example; xcodebuild test -project Examples/StarterIOS/StarterIOS.xcodeproj -scheme StarterIOS -configuration Debug -destination 'platform=iOS Simulator,name=iPhone Duo' CODE_SIGNING_ALLOWED=NO; xcodebuild test -scheme VModalSDK-Package -destination 'platform=iOS Simulator,name=iPhone Duo'; }
 sdk_security() { local help='
@@ -53,5 +57,5 @@ sdk_clean() { local help='
 sdk_dispatch() { local help='
     ## Usage:
       bash test.sh test
-  '; local command="${1:-help}"; shift || true; case "$command" in test) sdk_test "$@";; regression) sdk_regression "$@";; sim) sdk_sim "$@";; ios) sdk_ios "$@";; security) sdk_security "$@";; package) sdk_package "$@";; live) sdk_live "$@";; cctv_live) sdk_cctv_live "$@";; all) sdk_all "$@";; clean) sdk_clean "$@";; help|-h|--help) echo "$help";; *) echo "Unknown command: $command" >&2; echo "$help" >&2; return 2;; esac; }
+  '; local command="${1:-help}"; shift || true; case "$command" in test) sdk_test "$@";; regression) sdk_regression "$@";; sim) sdk_sim "$@";; ios) sdk_ios "$@";; framebase_ios) sdk_framebase_ios "$@";; security) sdk_security "$@";; package) sdk_package "$@";; live) sdk_live "$@";; cctv_live) sdk_cctv_live "$@";; all) sdk_all "$@";; clean) sdk_clean "$@";; help|-h|--help) echo "$help";; *) echo "Unknown command: $command" >&2; echo "$help" >&2; return 2;; esac; }
 sdk_dispatch "$@"

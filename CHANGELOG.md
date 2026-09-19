@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.4 — 2026-09-19
+
+- Added the native SwiftUI Framebase example for importing, preparing,
+  searching, and locally playing a resumable street-video archive.
+- Added deterministic mapping, persistence, gateway, session, playback, and UI
+  coverage plus aggregate simulator build and test gates.
+
 ## 1.2.3 — 2026-09-19
 
 - Refreshed public Swift developer onboarding with a one-prompt StarterIOS

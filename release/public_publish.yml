@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 env:
-  SDK_VERSION: 1.2.3
+  SDK_VERSION: 1.2.4
 
 jobs:
   verify_tagged_source:
