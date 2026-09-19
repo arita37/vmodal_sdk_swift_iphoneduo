@@ -1,5 +1,5 @@
 // swift-tools-version: 5.10
-// SDK release: 1.2.2
+// SDK release: 1.2.3
 
 import PackageDescription
 

@@ -2,33 +2,57 @@
   <img src="docs/assets/vmodal-swift-iphone-duo.png" alt="VModal video search and editing SDK" width="100%">
 </p>
 
-<h1 align="center">V Modal SDK for Apple platforms</h1>
+<h1 align="center">VModalSDK for Apple platforms</h1>
 
 <p align="center">
-  Search, upload, and index video with one concurrency-safe Swift package.<br>
-  Built for iOS, macOS, and SwiftUI with Xcode 26.6.
+  The Swift-native video workflow for apps that need to upload, index, and find the exact moment.<br>
+  Built for iOS, macOS, and SwiftUI with Swift concurrency and Xcode 26.6.
 </p>
 
 <p align="center">
   <img alt="Swift 6" src="https://img.shields.io/badge/Swift-6.0-F05138?logo=swift&logoColor=white">
   <img alt="iOS 16 or newer" src="https://img.shields.io/badge/iOS-16%2B-111111?logo=apple">
   <img alt="macOS 13 or newer" src="https://img.shields.io/badge/macOS-13%2B-111111?logo=apple">
-  <img alt="Version 1.2.2" src="https://img.shields.io/badge/release-1.2.2-0A84FF">
+  <img alt="Version 1.2.3" src="https://img.shields.io/badge/release-1.2.3-0A84FF">
   <img alt="MIT license" src="https://img.shields.io/badge/license-MIT-34C759">
 </p>
 
-VModal SDK 1.2.2 gives Apple apps an async, strongly typed API for the full
-video search lifecycle. It uses Swift structured concurrency, supports safe
-credential rotation, streams upload progress, and keeps collection/stream
-scope immutable so related operations cannot drift apart.
+VModalSDK 1.2.3 gives Apple apps a polished, strongly typed path from camera
+roll to searchable moments. Build fluid SwiftUI experiences with `async/await`,
+live upload progress, cancellation, key rotation, and immutable collection
+scopes that keep every request aimed at the right video stream.
+
+Whether you are building a camera companion, editorial tool, field workflow,
+or a video-first consumer app, VModalSDK keeps the networking layer small,
+predictable, and unmistakably Swift.
+
+# Install with one prompt
+
+On a Mac with Xcode 26.6 or newer and an available iPhone simulator, paste this
+into Terminal. It clones the public package, resolves its dependencies, builds
+`Examples/StarterIOS`, boots an available iPhone simulator, installs the app,
+and launches the demo.
+
+```bash
+git clone --depth 1 https://github.com/v-modal/vmodal_sdk_swift_iphoneduo.git && cd vmodal_sdk_swift_iphoneduo && bash install.sh check && bash run.sh example --device "$(bash install.sh device_id)"
+```
+
+`install.sh` validates your selected Xcode toolchain; it deliberately does not
+download or switch Xcode. To launch StarterIOS again from the cloned public
+repository, run:
+
+```bash
+cd vmodal_sdk_swift_iphoneduo
+bash run.sh example --device "$(bash install.sh device_id)"
+```
 
 ## Quick start
 
 ### 1. Authenticate
 
-Add `https://github.com/v-modal/vmodal_sdk_swift_iphoneduo` in Xcode through
-**File → Add Package Dependencies**, then attach the `VModalSDK` product to
-your app target.
+In Xcode, choose **File → Add Package Dependencies…**, paste
+`https://github.com/v-modal/vmodal_sdk_swift_iphoneduo`, and attach the
+`VModalSDK` product to your app target. That is all your app needs to begin.
 
 Gateway mode is the standard application configuration. The provider is read
 before every request, so a rotated credential takes effect immediately without
@@ -81,9 +105,10 @@ let jobs = try await videos.listIndexJobs()
 
 ## Upload. Index. Find the moment.
 
-Uploads start immediately and expose a coalesced `AsyncStream` of progress.
-File content is replayable when a retry is safe, while gateway credentials are
-never attached to the signed upload destination.
+Uploads start immediately and expose a coalesced `AsyncStream` of progress—an
+easy fit for a SwiftUI `ProgressView`. File content is replayable when a retry
+is safe, while gateway credentials never travel to the signed upload
+destination.
 
 ```swift
 let source = try UploadSource(fileURL: movieURL)
@@ -136,10 +161,13 @@ await project.close()
 
 ## Designed for SwiftUI
 
-`Examples/StarterIOS` keeps one `@MainActor` session owner, places work in
+The included [`Examples/StarterIOS`](Examples/StarterIOS) project is not a
+throwaway sample. It keeps one `@MainActor` session owner, places work in
 cancelable tasks, and uses an adaptive `NavigationSplitView`. Upload ownership
 is separate from view geometry, so ordinary scene resizing does not recreate
-an operation.
+an operation. Open
+[`Examples/StarterIOS/StarterIOS.xcodeproj`](Examples/StarterIOS/StarterIOS.xcodeproj)
+to explore a compact production-style integration.
 
 ```swift
 @main
@@ -168,9 +196,9 @@ upload-continuity claims after the exact iPhone Duo simulator gate is restored.
 
 - [Complete operation parity reference](Sources/VModalSDK/VModalSDK.docc/APIReference.md)
 - [Public Swift package repository](https://github.com/v-modal/vmodal_sdk_swift_iphoneduo)
-- `Sources/VModalSDK` — client, resources, models, uploads, and transport
-- `Examples/StarterIOS` — adaptive SwiftUI starter application
-- `Tools` — route sync, release manifest, simulations, and live checks
+- [`Sources/VModalSDK`](Sources/VModalSDK) — client, resources, models, uploads, and transport
+- [`Examples/StarterIOS`](Examples/StarterIOS) — adaptive SwiftUI starter application
+- [`Tools`](Tools) — route sync, release manifest, simulations, and live checks
 
 ## Verify locally
 

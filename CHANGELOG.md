@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.3 — 2026-09-19
+
+- Refreshed public Swift developer onboarding with a one-prompt StarterIOS
+  simulator launch and repository-root-relative package links.
+
 ## 1.2.2 — 2026-09-12
 
 - Added the Swift 6 concurrency-safe VModal client and scoped API.
