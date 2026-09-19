@@ -27,21 +27,18 @@ or a video-first consumer app, VModalSDK keeps the networking layer small,
 predictable, and unmistakably Swift.
 
 # Install with one prompt
-
+```markdown
 On a Mac with Xcode 26.6 or newer and an available iPhone simulator, paste this
 into Terminal. It clones the public package, resolves its dependencies, builds
 `Examples/StarterIOS`, boots an available iPhone simulator, installs the app,
 and launches the demo.
 
-```bash
 git clone --depth 1 https://github.com/v-modal/vmodal_sdk_swift_iphoneduo.git && cd vmodal_sdk_swift_iphoneduo && bash install.sh check && bash run.sh example --device "$(bash install.sh device_id)"
-```
 
 `install.sh` validates your selected Xcode toolchain; it deliberately does not
 download or switch Xcode. To launch StarterIOS again from the cloned public
 repository, run:
 
-```bash
 cd vmodal_sdk_swift_iphoneduo
 bash run.sh example --device "$(bash install.sh device_id)"
 ```
